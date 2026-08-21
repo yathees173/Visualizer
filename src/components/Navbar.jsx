@@ -17,25 +17,25 @@ const Navbar = ({ activeTab, setActiveTab }) => {
         </div>
         <div>
           <h1 className="font-bold text-base md:text-lg leading-none text-white">GraphSearch</h1>
-          <p className="text-[10px] md:text-xs text-white/80">Algorithm Visualizer</p>
+          <p className="text-[10px] md:text-xs text-white/80">Algorithm Visualizer V2.0</p>
         </div>
       </div>
 
       <div className="flex items-center gap-1 bg-indigo-950/50 p-1 rounded-xl border border-indigo-800">
-        <NavButton 
-          active={activeTab === 'visualizer'} 
+        <NavButton
+          active={activeTab === 'visualizer'}
           onClick={() => setActiveTab('visualizer')}
           icon={<Network size={18} />}
           label="Visualizer"
         />
-        <NavButton 
-          active={activeTab === 'learning'} 
+        <NavButton
+          active={activeTab === 'learning'}
           onClick={() => setActiveTab('learning')}
           icon={<BookOpen size={18} />}
           label="Learning"
         />
-        <NavButton 
-          active={activeTab === 'comparison'} 
+        <NavButton
+          active={activeTab === 'comparison'}
           onClick={() => setActiveTab('comparison')}
           icon={<Scaling size={18} />}
           label="Comparison"
@@ -49,11 +49,10 @@ const Navbar = ({ activeTab, setActiveTab }) => {
 const NavButton = ({ active, onClick, icon, label }) => (
   <button
     onClick={onClick}
-    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-      active 
-        ? 'bg-indigo-600 text-white shadow-sm' 
+    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${active
+        ? 'bg-indigo-600 text-white shadow-sm'
         : 'text-white/80 hover:text-white hover:bg-indigo-800/50'
-    }`}
+      }`}
   >
     {icon}
     <span className="hidden md:inline">{label}</span>

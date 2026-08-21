@@ -114,3 +114,12 @@
 .stat-number {
   @apply font-mono text-primary font-bold bg-primary/10 px-1.5 py-0.5 rounded border border-primary/20;
 }
+
+@keyframes nameBlink {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(165,180,252,0.8)); }
+  50% { opacity: 0.3; filter: drop-shadow(0 0 2px rgba(165,180,252,0.1)); }
+}
+
+.animate-name-blink {
+  animation: nameBlink 1.5s ease-in-out infinite;
+}

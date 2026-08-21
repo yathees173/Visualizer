@@ -6,6 +6,7 @@ import Sidebar from './components/Sidebar';
 import Visualizer from './components/Visualizer';
 import TracePanel from './components/TracePanel';
 import LearningPanel from './components/LearningPanel';
+import ComparisonPanel from './components/ComparisonPanel';
 import { Toaster } from 'react-hot-toast';
 
 const GithubIcon = ({ size = 14, className = "" }) => (
@@ -49,27 +50,27 @@ function App() {
               )}
 
               {activeTab === 'comparison' && (
-                <div className="flex-1 flex flex-col items-center justify-center p-8 text-white">
-                  <p className="text-xl">Comparison Mode coming soon...</p>
+                <div className="flex-1 overflow-y-auto p-4 md:p-6">
+                  <ComparisonPanel />
                 </div>
               )}
             </div>
           </main>
 
-          <footer className="h-10 bg-indigo-950 border-t border-indigo-900 flex items-center px-3 lg:px-6 text-[10px] lg:text-xs text-white justify-between shadow-[0_-4px_20px_rgba(0,0,0,0.5)] z-50 relative overflow-hidden shrink-0">
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/0 via-indigo-500/5 to-indigo-900/0 opacity-50"></div>
-            <span className="font-semibold tracking-wider uppercase z-10 truncate mr-2">Search Alg<span className="hidden sm:inline">orithm</span> Visualizer <span className="text-white font-bold">v2.0</span></span>
-
-            <div className="flex items-center gap-2 lg:gap-3 z-10 shrink-0">
-              <span className="font-medium flex items-center gap-1">
-                <span className="hidden sm:inline">Developed by</span> <span className="text-white font-black tracking-widest animate-pulse drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">YATHEES</span>
+          <footer className="h-10 bg-indigo-950 border-t border-indigo-900 flex items-center justify-center px-4 text-[10px] sm:text-xs text-white shadow-[0_-4px_20px_rgba(0,0,0,0.5)] z-50 relative overflow-hidden shrink-0">
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/0 via-indigo-500/10 to-indigo-900/0 opacity-50"></div>
+            
+            <div className="flex items-center gap-3 sm:gap-5 z-10 bg-indigo-900/40 px-6 py-1.5 rounded-full border border-indigo-800/60 backdrop-blur-sm shadow-[0_0_15px_rgba(0,0,0,0.2)]">
+              <span className="font-medium flex items-center text-indigo-200">
+                <span className="hidden sm:inline mr-1">Developed by</span> <span className="text-white font-black tracking-widest animate-name-blink">YATHEES</span>
               </span>
-              <div className="flex items-center gap-2 lg:gap-3 border-l border-indigo-800/80 pl-2 lg:pl-3">
-                <a href="https://github.com/yathees173" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-white/90 hover:text-white hover:-translate-y-0.5 transition-all drop-shadow-md" title="GitHub">
-                  <GithubIcon size={14} /> <span className="text-[10px] uppercase font-bold tracking-wider hidden sm:inline">GitHub</span>
+              
+              <div className="flex items-center gap-3 sm:gap-4 border-l border-indigo-700/80 pl-3 sm:pl-4">
+                <a href="https://github.com/yathees173" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-indigo-300 hover:text-white hover:scale-105 transition-all group" title="GitHub">
+                  <GithubIcon size={14} className="group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all" /> <span className="text-[10px] uppercase font-bold tracking-widest">GitHub</span>
                 </a>
-                <a href="https://linkedin.com/in/yathees173" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-white/90 hover:text-white hover:-translate-y-0.5 transition-all drop-shadow-md" title="LinkedIn">
-                  <LinkedinIcon size={14} /> <span className="text-[10px] uppercase font-bold tracking-wider hidden sm:inline">LinkedIn</span>
+                <a href="https://linkedin.com/in/yathees173" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-indigo-300 hover:text-white hover:scale-105 transition-all group" title="LinkedIn">
+                  <LinkedinIcon size={14} className="group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all" /> <span className="text-[10px] uppercase font-bold tracking-widest">LinkedIn</span>
                 </a>
               </div>
             </div>

@@ -120,7 +120,7 @@ const Visualizer = () => {
                 />
                 <text
                   dy="2.5"
-                  className="text-[9px] fill-slate-300 font-mono font-bold"
+                  className="text-[9px] fill-white font-mono font-bold"
                   textAnchor="middle"
                 >
                   {edge.weight}
@@ -141,7 +141,7 @@ const Visualizer = () => {
 
           let strokeColor = '#475569'; 
           let fillColor = '#1e293b'; 
-          let textColor = 'fill-slate-300'; 
+          let textColor = 'fill-white'; 
           let strokeWidth = 1.5;
           let scale = 1;
 
@@ -216,7 +216,7 @@ const Visualizer = () => {
                 <text
                   y="28"
                   textAnchor="middle"
-                  className="text-[8px] fill-muted-foreground font-medium"
+                  className="text-[8px] fill-white/70 font-medium"
                 >
                   h: {node.heuristic}
                 </text>

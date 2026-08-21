@@ -22,7 +22,7 @@ const Sidebar = () => {
   const progress = steps.length > 0 ? ((currentStepIndex + 1) / steps.length) * 100 : 0;
 
   return (
-    <aside className="border-r border-indigo-800 flex flex-col z-40 transition-all duration-300 w-64 shrink-0 bg-indigo-900 text-white">
+    <aside className="border-indigo-800 flex flex-col z-40 transition-all duration-300 w-full lg:w-72 border-b lg:border-b-0 lg:border-r shrink-0 bg-indigo-900 text-white">
       <div className="flex border-b border-indigo-800 shrink-0">
         <div className="flex flex-row flex-1">
           <TabButton 

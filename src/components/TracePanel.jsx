@@ -122,9 +122,9 @@ const TracePanel = () => {
   };
 
   return (
-    <div className="h-64 border-t glass flex flex-col lg:flex-row shadow-lg z-30 overflow-hidden bg-white/40">
+    <div className="h-auto lg:h-72 border-t glass flex flex-col lg:flex-row shadow-lg z-30 bg-white/40 shrink-0">
       {/* Explanation Area */}
-      <div className="flex-1 p-6 flex flex-col gap-4 border-r border-slate-100 overflow-y-auto">
+      <div className="flex-1 p-4 lg:p-6 flex flex-col gap-4 border-b lg:border-b-0 lg:border-r border-slate-100 lg:overflow-y-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-primary">
             <Info size={20} />
@@ -176,7 +176,7 @@ const TracePanel = () => {
       </div>
 
       {/* Data Structure Area */}
-      <div className="w-full lg:w-96 p-6 flex flex-col gap-4 bg-slate-50/50 border-l border-slate-100">
+      <div className="w-full lg:w-96 p-4 lg:p-6 flex flex-col gap-4 bg-slate-50/50 border-l border-slate-100 lg:overflow-y-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-slate-500">
             <List size={20} />

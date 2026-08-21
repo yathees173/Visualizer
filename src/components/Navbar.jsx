@@ -10,14 +10,14 @@ const Navbar = ({ activeTab, setActiveTab }) => {
   }, []);
 
   return (
-    <nav className="h-16 flex items-center justify-between px-6 z-50 bg-indigo-900 border-b border-indigo-800 text-white">
-      <div className="flex items-center gap-3">
-        <div className="p-2 bg-indigo-600 rounded-lg text-white shadow-lg shadow-indigo-900/20">
-          <Network size={24} />
+    <nav className="h-16 flex items-center justify-between px-3 md:px-6 z-50 bg-indigo-900 border-b border-indigo-800 text-white shrink-0">
+      <div className="flex items-center gap-2 md:gap-3">
+        <div className="p-1.5 md:p-2 bg-indigo-600 rounded-lg text-white shadow-lg shadow-indigo-900/20">
+          <Network size={20} className="md:w-6 md:h-6" />
         </div>
         <div>
-          <h1 className="font-bold text-lg leading-none text-white">GraphSearch</h1>
-          <p className="text-xs text-white/80">Algorithm Visualizer</p>
+          <h1 className="font-bold text-base md:text-lg leading-none text-white">GraphSearch</h1>
+          <p className="text-[10px] md:text-xs text-white/80">Algorithm Visualizer</p>
         </div>
       </div>
 

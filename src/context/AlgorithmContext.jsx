@@ -5,7 +5,7 @@ import { searchAlgorithms } from '../logic/algorithms/search';
 const AlgorithmContext = createContext();
 
 export const AlgorithmProvider = ({ children }) => {
-  const { graph, startNode, endNode } = useGraph();
+  const { graph, startNode, endNode, version } = useGraph();
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('BFS');
   const [steps, setSteps] = useState([]);
   const [currentStepIndex, setCurrentStepIndex] = useState(-1);
@@ -18,7 +18,7 @@ export const AlgorithmProvider = ({ children }) => {
     setCurrentStepIndex(-1);
     const algorithmSteps = searchAlgorithms[selectedAlgorithm](graph, startNode, endNode);
     setSteps(algorithmSteps);
-  }, [graph, startNode, endNode, selectedAlgorithm]);
+  }, [graph, startNode, endNode, selectedAlgorithm, version]);
 
   useEffect(() => {
     reset();

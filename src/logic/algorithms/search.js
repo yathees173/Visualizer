@@ -13,6 +13,7 @@
 
 export const searchAlgorithms = {
   BFS: (graph, startNode, endNode) => {
+    if (!startNode || !endNode) return [{ visited: new Set(), frontier: [], current: null, path: [], totalCost: 0, explanation: 'Please select both a Start Node and a Goal Node.', dataStructure: [], type: 'failure' }];
     const steps = [];
     const queue = [{ id: startNode, path: [startNode], cost: 0 }];
     const visited = new Set();
@@ -82,10 +83,12 @@ export const searchAlgorithms = {
       });
     }
 
+    steps.push({ visited: new Set(visited), frontier: [], current: null, path: [], totalCost: 0, explanation: `Search exhausted. No path found to Goal Node ${endNode}.`, dataStructure: [], type: 'failure' });
     return steps;
   },
 
   DFS: (graph, startNode, endNode) => {
+    if (!startNode || !endNode) return [{ visited: new Set(), frontier: [], current: null, path: [], totalCost: 0, explanation: 'Please select both a Start Node and a Goal Node.', dataStructure: [], type: 'failure' }];
     const steps = [];
     const stack = [{ id: startNode, path: [startNode], cost: 0 }];
     const visited = new Set();
@@ -153,10 +156,12 @@ export const searchAlgorithms = {
       });
     }
 
+    steps.push({ visited: new Set(visited), frontier: [], current: null, path: [], totalCost: 0, explanation: `Search exhausted. No path found to Goal Node ${endNode}.`, dataStructure: [], type: 'failure' });
     return steps;
   },
 
   UCS: (graph, startNode, endNode) => {
+    if (!startNode || !endNode) return [{ visited: new Set(), frontier: [], current: null, path: [], totalCost: 0, explanation: 'Please select both a Start Node and a Goal Node.', dataStructure: [], type: 'failure' }];
     const steps = [];
     // Simple Priority Queue implementation using sorting for educational clarity
     let pq = [{ id: startNode, path: [startNode], cost: 0 }];
@@ -223,10 +228,12 @@ export const searchAlgorithms = {
         type: 'expand'
       });
     }
+    steps.push({ visited: new Set(visited), frontier: [], current: null, path: [], totalCost: 0, explanation: `Search exhausted. No path found to Goal Node ${endNode}.`, dataStructure: [], type: 'failure' });
     return steps;
   },
 
   Dijkstra: (graph, startNode, endNode) => {
+    if (!startNode || !endNode) return [{ visited: new Set(), frontier: [], current: null, path: [], totalCost: 0, explanation: 'Please select both a Start Node and a Goal Node.', dataStructure: [], type: 'failure' }];
     const steps = [];
     let pq = [{ id: startNode, path: [startNode], cost: 0 }];
     const visited = new Set();
@@ -292,10 +299,12 @@ export const searchAlgorithms = {
         type: 'expand'
       });
     }
+    steps.push({ visited: new Set(visited), frontier: [], current: null, path: [], totalCost: 0, explanation: `Search exhausted. No path found to Goal Node ${endNode}.`, dataStructure: [], type: 'failure' });
     return steps;
   },
 
   'A*': (graph, startNode, endNode) => {
+    if (!startNode || !endNode) return [{ visited: new Set(), frontier: [], current: null, path: [], totalCost: 0, explanation: 'Please select both a Start Node and a Goal Node.', dataStructure: [], type: 'failure' }];
     const steps = [];
     const getH = (id) => graph.nodes.get(id)?.heuristic || 0;
     let pq = [{ id: startNode, path: [startNode], g: 0, f: getH(startNode) }];
@@ -365,10 +374,12 @@ export const searchAlgorithms = {
         type: 'expand'
       });
     }
+    steps.push({ visited: new Set(visited), frontier: [], current: null, path: [], totalCost: 0, explanation: `Search exhausted. No path found to Goal Node ${endNode}.`, dataStructure: [], type: 'failure' });
     return steps;
   },
 
   'Greedy BFS': (graph, startNode, endNode) => {
+    if (!startNode || !endNode) return [{ visited: new Set(), frontier: [], current: null, path: [], totalCost: 0, explanation: 'Please select both a Start Node and a Goal Node.', dataStructure: [], type: 'failure' }];
     const steps = [];
     const getH = (id) => graph.nodes.get(id)?.heuristic || 0;
     let pq = [{ id: startNode, path: [startNode], h: getH(startNode), cost: 0 }];
@@ -436,6 +447,7 @@ export const searchAlgorithms = {
         type: 'expand'
       });
     }
+    steps.push({ visited: new Set(visited), frontier: [], current: null, path: [], totalCost: 0, explanation: `Search exhausted. No path found to Goal Node ${endNode}.`, dataStructure: [], type: 'failure' });
     return steps;
   }
 };

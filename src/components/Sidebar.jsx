@@ -74,6 +74,7 @@ const Sidebar = () => {
                     onChange={(e) => setStartNode(e.target.value)}
                     className="w-full bg-indigo-950/50 border border-indigo-800 shadow-sm rounded-lg p-2 pr-8 text-xs outline-none focus:border-indigo-500 text-white font-medium transition-all appearance-none cursor-pointer"
                   >
+                    <option value="" disabled className="bg-indigo-950 text-indigo-400">Select Start Node</option>
                     {[...graph.nodes.keys()].map(id => <option className="bg-indigo-950" key={id} value={id}>{id}</option>)}
                   </select>
                   <div className="absolute bottom-2 right-2 pointer-events-none text-indigo-400">
@@ -87,6 +88,7 @@ const Sidebar = () => {
                     onChange={(e) => setEndNode(e.target.value)}
                     className="w-full bg-indigo-950/50 border border-indigo-800 shadow-sm rounded-lg p-2 pr-8 text-xs outline-none focus:border-indigo-500 text-white font-medium transition-all appearance-none cursor-pointer"
                   >
+                    <option value="" disabled className="bg-indigo-950 text-indigo-400">Select End Node</option>
                     {[...graph.nodes.keys()].map(id => <option className="bg-indigo-950" key={id} value={id}>{id}</option>)}
                   </select>
                   <div className="absolute bottom-2 right-2 pointer-events-none text-indigo-400">
@@ -215,7 +217,7 @@ import { FileUp, Info } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const GraphEditor = () => {
-  const { graph, addEdge, removeEdge, setHeuristic, loadRomaniaMap, loadComplexTree } = useGraph();
+  const { graph, addEdge, removeEdge, setHeuristic, loadRomaniaMap, loadComplexTree, currentGraphType } = useGraph();
   const [newEdge, setNewEdge] = useState('');
   const [newHeuristic, setNewHeuristic] = useState('');
   const [showTemplate, setShowTemplate] = useState(false);
@@ -424,7 +426,16 @@ const GraphEditor = () => {
       <section className="space-y-3">
         <div className="flex items-center justify-between">
           <label className="text-xs font-semibold text-white uppercase tracking-wider">Edges</label>
-          <span className="text-[10px] font-bold bg-indigo-800 text-indigo-100 px-2 py-0.5 rounded-full">{graph.edges.length}</span>
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => currentGraphType === 'tree' ? loadComplexTree() : loadRomaniaMap()}
+              className="text-indigo-300 hover:text-white hover:bg-indigo-800 p-1 rounded-md transition-colors"
+              title="Reset Graph to Default"
+            >
+              <RotateCcw size={14} />
+            </button>
+            <span className="text-[10px] font-bold bg-indigo-800 text-indigo-100 px-2 py-0.5 rounded-full">{graph.edges.length}</span>
+          </div>
         </div>
         <div className="max-h-48 overflow-y-auto border border-indigo-800 rounded-xl divide-y divide-indigo-800/50 bg-indigo-950/30 shadow-inner custom-scrollbar">
           {graph.edges.length === 0 && (

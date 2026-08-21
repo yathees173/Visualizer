@@ -32,6 +32,9 @@ export class Graph {
   }
 
   addEdge(fromId, toId, weight = 1) {
+    if (!this.nodes.has(fromId)) this.addNode(fromId, 100 + Math.random() * 400, 100 + Math.random() * 300);
+    if (!this.nodes.has(toId)) this.addNode(toId, 100 + Math.random() * 400, 100 + Math.random() * 300);
+
     const fromNode = this.nodes.get(fromId);
     const toNode = this.nodes.get(toId);
     if (!fromNode || !toNode) return;

@@ -9,7 +9,10 @@ export const GraphProvider = ({ children }) => {
   const [endNode, setEndNode] = useState(null);
   const [version, setVersion] = useState(0); // Trigger re-renders
 
+  const [currentGraphType, setCurrentGraphType] = useState('romania');
+
   const loadRomaniaMap = useCallback(() => {
+    setCurrentGraphType('romania');
     const g = new Graph();
     g.addNode('Arad', 50, 150);
     g.addNode('Zerind', 80, 60);
@@ -71,6 +74,7 @@ export const GraphProvider = ({ children }) => {
   }, []);
 
   const loadComplexTree = useCallback(() => {
+    setCurrentGraphType('tree');
     const g = new Graph();
     // Level 0 (Root)
     g.addNode('A', 400, 50);
@@ -138,8 +142,29 @@ export const GraphProvider = ({ children }) => {
 
   const removeEdge = useCallback((from, to) => {
     graph.removeEdge(from, to);
+    
+    // Auto-delete nodes that have no edges left
+    const hasEdges = (nodeId) => graph.edges.some(e => e.from === nodeId || e.to === nodeId);
+    
+    let startReset = false;
+    let endReset = false;
+    
+    if (!hasEdges(from)) {
+      graph.removeNode(from);
+      if (startNode === from) startReset = true;
+      if (endNode === from) endReset = true;
+    }
+    if (from !== to && !hasEdges(to)) {
+      graph.removeNode(to);
+      if (startNode === to) startReset = true;
+      if (endNode === to) endReset = true;
+    }
+    
+    if (startReset) setStartNode(null);
+    if (endReset) setEndNode(null);
+
     setVersion(v => v + 1);
-  }, [graph]);
+  }, [graph, startNode, endNode]);
 
   const addNode = useCallback((id, x, y) => {
     graph.addNode(id, x, y);
@@ -174,6 +199,7 @@ export const GraphProvider = ({ children }) => {
       setHeuristic,
       loadRomaniaMap,
       loadComplexTree,
+      currentGraphType,
       version 
     }}>
       {children}

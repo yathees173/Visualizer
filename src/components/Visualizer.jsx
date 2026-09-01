@@ -87,7 +87,7 @@ const Visualizer = () => {
   const frontierSet = useMemo(() => new Set((currentStep.frontier || []).map(f => f.id)), [currentStep.frontier]);
 
   return (
-    <div id="visualizer-container" className="w-full h-full relative cursor-grab active:cursor-grabbing select-none overflow-hidden grid-bg">
+    <div id="visualizer-container" className="flex-1 w-full relative cursor-grab active:cursor-grabbing select-none overflow-hidden grid-bg">
       <div className="absolute top-0 left-0 z-10 w-full lg:w-auto">
          <div className="flex flex-row lg:flex-col p-2 lg:p-3 gap-3 lg:gap-2 bg-indigo-950/95 lg:bg-indigo-950 border-b lg:border-r lg:border-b border-indigo-700 shadow-xl rounded-none lg:rounded-br-2xl text-indigo-100 items-center lg:items-stretch flex-nowrap justify-start lg:justify-center overflow-x-auto no-scrollbar">
             <div className="flex flex-row items-center gap-1 bg-indigo-900/50 p-1 rounded-lg border border-indigo-800/50 shrink-0">

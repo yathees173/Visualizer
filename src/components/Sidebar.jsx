@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { 
+import {
   Play, Pause, RotateCcw, ChevronRight, ChevronLeft, ChevronDown,
-  Settings2, Plus, Trash2, Map, Layers, HelpCircle, MoreVertical, Network 
+  Settings2, Plus, Trash2, Map, Layers, HelpCircle, MoreVertical, Network
 } from 'lucide-react';
 import { useAlgorithm } from '../context/AlgorithmContext';
 import { useGraph } from '../context/GraphContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Sidebar = () => {
-  const { 
-    selectedAlgorithm, setSelectedAlgorithm, 
-    isPlaying, setIsPlaying, 
+  const {
+    selectedAlgorithm, setSelectedAlgorithm,
+    isPlaying, setIsPlaying,
     reset, stepForward, stepBackward,
     speed, setSpeed,
     currentStepIndex, steps
@@ -25,14 +25,14 @@ const Sidebar = () => {
     <aside className="border-indigo-800 flex flex-col z-40 transition-all duration-300 w-full lg:w-72 border-b lg:border-b-0 lg:border-r shrink-0 bg-indigo-900 text-white">
       <div className="flex border-b border-indigo-800 shrink-0">
         <div className="flex flex-row flex-1">
-          <TabButton 
-            active={activeSection === 'algorithm'} 
+          <TabButton
+            active={activeSection === 'algorithm'}
             onClick={() => setActiveSection('algorithm')}
             icon={<Settings2 size={18} />}
             label="Setup"
           />
-          <TabButton 
-            active={activeSection === 'editor'} 
+          <TabButton
+            active={activeSection === 'editor'}
             onClick={() => setActiveSection('editor')}
             icon={<Network size={18} />}
             label="Graph"
@@ -44,9 +44,9 @@ const Sidebar = () => {
         {activeSection === 'algorithm' ? (
           <>
             <section className="space-y-3">
-              <label className="text-xs font-semibold text-white uppercase tracking-wider">Select Algorithm</label>
+              <label className="text-xs font-semibold text-white uppercase tracking-wider">Select an Algorithm</label>
               <div className="relative">
-                <select 
+                <select
                   value={selectedAlgorithm}
                   onChange={(e) => setSelectedAlgorithm(e.target.value)}
                   className="w-full bg-indigo-950/50 border border-indigo-800 shadow-sm rounded-xl p-3 pr-10 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none appearance-none cursor-pointer text-white transition-all font-medium"
@@ -69,8 +69,8 @@ const Sidebar = () => {
               <div className="flex flex-col gap-3">
                 <div className="space-y-1 relative">
                   <span className="text-[10px] text-white px-1">Start Node</span>
-                  <select 
-                    value={startNode || ''} 
+                  <select
+                    value={startNode || ''}
                     onChange={(e) => setStartNode(e.target.value)}
                     className="w-full bg-indigo-950/50 border border-indigo-800 shadow-sm rounded-lg p-2 pr-8 text-xs outline-none focus:border-indigo-500 text-white font-medium transition-all appearance-none cursor-pointer"
                   >
@@ -83,8 +83,8 @@ const Sidebar = () => {
                 </div>
                 <div className="space-y-1 relative">
                   <span className="text-[10px] text-white px-1">End Node</span>
-                  <select 
-                    value={endNode || ''} 
+                  <select
+                    value={endNode || ''}
                     onChange={(e) => setEndNode(e.target.value)}
                     className="w-full bg-indigo-950/50 border border-indigo-800 shadow-sm rounded-lg p-2 pr-8 text-xs outline-none focus:border-indigo-500 text-white font-medium transition-all appearance-none cursor-pointer"
                   >
@@ -105,7 +105,7 @@ const Sidebar = () => {
                 <label className="text-xs font-semibold text-white uppercase tracking-wider">Animation Speed</label>
                 <span className="text-xs font-medium text-primary">{(2000 - speed) / 100}x</span>
               </div>
-              <input 
+              <input
                 type="range" min="100" max="1900" step="100"
                 value={2000 - speed}
                 onChange={(e) => setSpeed(2000 - parseInt(e.target.value))}
@@ -115,28 +115,28 @@ const Sidebar = () => {
 
             <div className="pt-4 border-t border-white/30 space-y-4">
               <div className="flex flex-col gap-2">
-                 <div className="flex items-center justify-between text-xs mb-1 px-1">
-                   <span className="text-white font-medium">Progress</span>
-                   <span className="text-indigo-400 font-bold">{Math.round(progress)}%</span>
-                 </div>
-                 <div className="h-1.5 w-full bg-indigo-950 rounded-full overflow-hidden">
-                   <motion.div 
-                     className="h-full bg-indigo-500"
-                     initial={{ width: 0 }}
-                     animate={{ width: `${progress}%` }}
-                     transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
-                   />
-                 </div>
+                <div className="flex items-center justify-between text-xs mb-1 px-1">
+                  <span className="text-white font-medium">Progress</span>
+                  <span className="text-indigo-400 font-bold">{Math.round(progress)}%</span>
+                </div>
+                <div className="h-1.5 w-full bg-indigo-950 rounded-full overflow-hidden">
+                  <motion.div
+                    className="h-full bg-indigo-500"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress}%` }}
+                    transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
+                  />
+                </div>
               </div>
 
               <div className="grid grid-cols-4 gap-2">
-                <ControlButton 
-                  onClick={stepBackward} 
+                <ControlButton
+                  onClick={stepBackward}
                   disabled={currentStepIndex <= -1 || isPlaying}
-                  icon={<ChevronLeft size={20} />} 
+                  icon={<ChevronLeft size={20} />}
                   label="Back"
                 />
-                <button 
+                <button
                   onClick={() => {
                     if (currentStepIndex >= steps.length - 1) {
                       reset();
@@ -145,27 +145,26 @@ const Sidebar = () => {
                       setIsPlaying(!isPlaying);
                     }
                   }}
-                  className={`col-span-2 flex items-center justify-center gap-2 py-4 rounded-xl font-black text-sm uppercase tracking-widest transition-all shadow-lg active:scale-95 group overflow-hidden relative border border-indigo-500/30 ${
-                    isPlaying 
-                      ? 'bg-amber-500 text-white shadow-amber-500/30' 
-                      : 'bg-indigo-600 text-white shadow-indigo-600/30 hover:bg-indigo-500'
-                  }`}
+                  className={`col-span-2 flex items-center justify-center gap-2 py-4 rounded-xl font-black text-sm uppercase tracking-widest transition-all shadow-lg active:scale-95 group overflow-hidden relative border border-indigo-500/30 ${isPlaying
+                    ? 'bg-amber-500 text-white shadow-amber-500/30'
+                    : 'bg-indigo-600 text-white shadow-indigo-600/30 hover:bg-indigo-500'
+                    }`}
                 >
                   <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                   <div className="relative flex items-center gap-2">
-                     {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" className="animate-pulse" />}
-                     <span>{isPlaying ? 'Pause' : 'Start'}</span>
+                    {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" className="animate-pulse" />}
+                    <span>{isPlaying ? 'Pause' : 'Start'}</span>
                   </div>
                 </button>
-                <ControlButton 
-                  onClick={stepForward} 
+                <ControlButton
+                  onClick={stepForward}
                   disabled={currentStepIndex >= steps.length - 1 || isPlaying}
-                  icon={<ChevronRight size={20} />} 
+                  icon={<ChevronRight size={20} />}
                   label="Next"
                 />
               </div>
-              
-              <button 
+
+              <button
                 onClick={reset}
                 className="w-full flex items-center justify-center gap-2 p-3 text-sm font-medium border border-indigo-700/50 rounded-xl hover:bg-indigo-800/50 bg-indigo-950/30 transition-colors active:scale-95 text-indigo-200 hover:text-white"
               >
@@ -186,11 +185,10 @@ const Sidebar = () => {
 const TabButton = ({ active, onClick, icon, label }) => (
   <button
     onClick={onClick}
-    className={`flex-1 flex items-center justify-center gap-2 p-4 text-xs font-bold uppercase tracking-widest transition-all border-b-2 text-white ${
-      active 
-        ? 'border-indigo-400 bg-indigo-800/50' 
-        : 'border-transparent hover:bg-indigo-800/30'
-    }`}
+    className={`flex-1 flex items-center justify-center gap-2 p-4 text-xs font-bold uppercase tracking-widest transition-all border-b-2 text-white ${active
+      ? 'border-indigo-400 bg-indigo-800/50'
+      : 'border-transparent hover:bg-indigo-800/30'
+      }`}
   >
     {icon}
     {label}
@@ -202,11 +200,10 @@ const ControlButton = ({ onClick, icon, disabled, label }) => (
     onClick={onClick}
     disabled={disabled}
     title={label}
-    className={`flex items-center justify-center p-3 rounded-xl border transition-all border-indigo-700/50 ${
-      disabled 
-        ? 'opacity-30 cursor-not-allowed bg-indigo-950/50 text-indigo-400' 
-        : 'hover:bg-indigo-700 bg-indigo-800/50 active:scale-90 shadow-sm text-white'
-    }`}
+    className={`flex items-center justify-center p-3 rounded-xl border transition-all border-indigo-700/50 ${disabled
+      ? 'opacity-30 cursor-not-allowed bg-indigo-950/50 text-indigo-400'
+      : 'hover:bg-indigo-700 bg-indigo-800/50 active:scale-90 shadow-sm text-white'
+      }`}
   >
     {icon}
   </button>
@@ -295,7 +292,7 @@ const GraphEditor = () => {
       <section className="space-y-3">
         <div className="flex items-center justify-between">
           <label className="text-xs font-semibold text-white uppercase tracking-wider">Add Connection</label>
-          <button 
+          <button
             onClick={() => setShowTemplate(!showTemplate)}
             className="text-indigo-300 hover:bg-indigo-800 p-1 rounded-md transition-colors"
             title="Show Template"
@@ -306,7 +303,7 @@ const GraphEditor = () => {
 
         <AnimatePresence>
           {showTemplate && (
-            <motion.div 
+            <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -333,13 +330,13 @@ const GraphEditor = () => {
         </AnimatePresence>
 
         <div className="flex gap-2">
-          <input 
+          <input
             value={newEdge}
             onChange={(e) => setNewEdge(e.target.value)}
             placeholder="A,B,5"
             className="flex-1 bg-indigo-950/50 border border-indigo-800 shadow-sm rounded-lg p-2 text-xs outline-none focus:border-indigo-400 text-white transition-all placeholder:text-indigo-400/50"
           />
-          <button 
+          <button
             onClick={() => {
               const [f, t, w] = newEdge.split(',');
               if (f && t) addEdge(f.trim(), t.trim(), parseInt(w) || 1);
@@ -349,7 +346,7 @@ const GraphEditor = () => {
           >
             <Plus size={18} />
           </button>
-          
+
           <label className="p-2 bg-indigo-700 border border-indigo-600 text-white rounded-lg hover:bg-indigo-600 cursor-pointer shadow-md transition-all active:scale-95">
             <FileUp size={18} />
             <input type="file" accept=".xlsx, .xls, .csv" onChange={handleFileUpload} className="hidden" />
@@ -361,7 +358,7 @@ const GraphEditor = () => {
       <section className="space-y-3">
         <div className="flex items-center justify-between">
           <label className="text-xs font-semibold text-white uppercase tracking-wider">Set Heuristic</label>
-          <button 
+          <button
             onClick={() => setShowHeuristicTemplate(!showHeuristicTemplate)}
             className="text-indigo-300 hover:bg-indigo-800 p-1 rounded-md transition-colors"
             title="Show Template"
@@ -372,7 +369,7 @@ const GraphEditor = () => {
 
         <AnimatePresence>
           {showHeuristicTemplate && (
-            <motion.div 
+            <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -398,13 +395,13 @@ const GraphEditor = () => {
         </AnimatePresence>
 
         <div className="flex gap-2">
-          <input 
+          <input
             value={newHeuristic}
             onChange={(e) => setNewHeuristic(e.target.value)}
             placeholder="Arad, 366"
             className="flex-1 bg-indigo-950/50 border border-indigo-800 shadow-sm rounded-lg p-2 text-xs outline-none focus:border-indigo-400 text-white transition-all placeholder:text-indigo-400/50"
           />
-          <button 
+          <button
             onClick={() => {
               const [node, h] = newHeuristic.split(',');
               if (node && h) setHeuristic(node.trim(), parseInt(h.trim()) || 0);
@@ -414,7 +411,7 @@ const GraphEditor = () => {
           >
             <Plus size={18} />
           </button>
-          
+
           <label className="p-2 bg-indigo-700 border border-indigo-600 text-white rounded-lg hover:bg-indigo-600 cursor-pointer shadow-md transition-all active:scale-95">
             <FileUp size={18} />
             <input type="file" accept=".xlsx, .xls, .csv" onChange={handleHeuristicUpload} className="hidden" />
@@ -427,7 +424,7 @@ const GraphEditor = () => {
         <div className="flex items-center justify-between">
           <label className="text-xs font-semibold text-white uppercase tracking-wider">Edges</label>
           <div className="flex items-center gap-2">
-            <button 
+            <button
               onClick={() => currentGraphType === 'tree' ? loadComplexTree() : loadRomaniaMap()}
               className="text-indigo-300 hover:text-white hover:bg-indigo-800 p-1 rounded-md transition-colors"
               title="Reset Graph to Default"
@@ -439,11 +436,11 @@ const GraphEditor = () => {
         </div>
         <div className="max-h-48 overflow-y-auto border border-indigo-800 rounded-xl divide-y divide-indigo-800/50 bg-indigo-950/30 shadow-inner custom-scrollbar">
           {graph.edges.length === 0 && (
-             <div className="p-4 text-center text-xs text-white italic">No connections yet.</div>
+            <div className="p-4 text-center text-xs text-white italic">No connections yet.</div>
           )}
           {graph.edges.map((edge, i) => (
-             <div key={i} className="flex items-center justify-between p-3 text-xs">
-               <span className="font-medium text-white">{edge.from} → {edge.to} <span className="text-indigo-300 ml-1 font-mono">({edge.weight})</span></span>
+            <div key={i} className="flex items-center justify-between p-3 text-xs">
+              <span className="font-medium text-white">{edge.from} → {edge.to} <span className="text-indigo-300 ml-1 font-mono">({edge.weight})</span></span>
               <button onClick={() => removeEdge(edge.from, edge.to)} className="text-red-400 hover:text-red-300 hover:scale-110 transition-all">
                 <Trash2 size={14} />
               </button>
@@ -459,7 +456,7 @@ const GraphEditor = () => {
             <Map size={14} /> Romania Map
           </button>
           <button onClick={loadComplexTree} className="flex items-center justify-center gap-2 p-2 border border-indigo-700 rounded-lg text-[10px] font-bold bg-indigo-900/50 text-indigo-100 hover:bg-indigo-700 hover:text-white transition-all shadow-md active:scale-95">
-             Complex Tree
+            Complex Tree
           </button>
         </div>
       </section>

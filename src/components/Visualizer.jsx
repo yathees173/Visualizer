@@ -13,6 +13,7 @@ const Visualizer = () => {
   const [draggedNode, setDraggedNode] = useState(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const svgRef = useRef(null);
+  const lastTouchRef = useRef(null);
 
   const handleMouseDown = (e) => {
     if (e.target.tagName === 'svg') {
@@ -41,21 +42,62 @@ const Visualizer = () => {
     setDraggedNode(null);
   };
 
+  const handleTouchStart = (e) => {
+    if (e.target.tagName === 'svg') {
+      setIsDragging(true);
+      if (e.touches.length > 0) {
+        lastTouchRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (e.touches.length > 0) {
+      const touch = e.touches[0];
+      const clientX = touch.clientX;
+      const clientY = touch.clientY;
+
+      if (isDragging) {
+        if (lastTouchRef.current) {
+          const movementX = clientX - lastTouchRef.current.x;
+          const movementY = clientY - lastTouchRef.current.y;
+          setViewBox(prev => ({
+            ...prev,
+            x: prev.x - movementX / zoom,
+            y: prev.y - movementY / zoom
+          }));
+        }
+        lastTouchRef.current = { x: clientX, y: clientY };
+      } else if (draggedNode) {
+        const rect = svgRef.current.getBoundingClientRect();
+        const x = (clientX - rect.left) / zoom + viewBox.x;
+        const y = (clientY - rect.top) / zoom + viewBox.y;
+        updateNodePosition(draggedNode, x - dragOffset.x, y - dragOffset.y);
+      }
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    setDraggedNode(null);
+    lastTouchRef.current = null;
+  };
+
   const currentPathSet = useMemo(() => new Set(currentStep.path || []), [currentStep.path]);
   const frontierSet = useMemo(() => new Set((currentStep.frontier || []).map(f => f.id)), [currentStep.frontier]);
 
   return (
     <div id="visualizer-container" className="w-full h-full relative cursor-grab active:cursor-grabbing select-none overflow-hidden grid-bg">
-      <div className="absolute top-0 left-0 z-10">
-         <div className="flex flex-col p-3 gap-2 bg-indigo-950 border-r border-b border-indigo-700 shadow-xl rounded-br-2xl text-indigo-100">
-            <div className="flex flex-row items-center gap-1 bg-indigo-900/50 p-1 rounded-lg border border-indigo-800/50">
+      <div className="absolute top-0 left-0 z-10 w-full lg:w-auto">
+         <div className="flex flex-row lg:flex-col p-2 lg:p-3 gap-4 lg:gap-2 bg-indigo-950/95 lg:bg-indigo-950 border-b lg:border-r lg:border-b border-indigo-700 shadow-xl rounded-none lg:rounded-br-2xl text-indigo-100 items-center lg:items-stretch overflow-x-auto">
+            <div className="flex flex-row items-center gap-1 bg-indigo-900/50 p-1 rounded-lg border border-indigo-800/50 shrink-0">
               <button onClick={() => setZoom(z => Math.min(z * 1.2, 3))} className="p-1.5 hover:bg-indigo-700 hover:text-white rounded transition-colors text-indigo-300" title="Zoom In"><ZoomIn size={16} /></button>
               <button onClick={() => setZoom(z => Math.max(z / 1.2, 0.5))} className="p-1.5 hover:bg-indigo-700 hover:text-white rounded transition-colors text-indigo-300" title="Zoom Out"><ZoomOut size={16} /></button>
               <div className="w-px h-4 bg-indigo-800 mx-0.5"></div>
               <button onClick={() => { setViewBox({ x: -80, y: -20, width: 1000, height: 800 }); setZoom(1); }} className="p-1.5 hover:bg-indigo-700 hover:text-white rounded transition-colors text-indigo-300" title="Reset View"><RotateCcw size={16} /></button>
             </div>
             
-            <div className="flex flex-col gap-2 text-[10px] font-bold px-1">
+            <div className="flex flex-row lg:flex-col gap-4 lg:gap-2 text-[10px] font-bold px-1 shrink-0">
                <LegendItem color="bg-blue-500" label="Current" />
                <LegendItem color="bg-amber-500" label="Frontier" />
                <LegendItem color="bg-emerald-500" label="Visited" />
@@ -71,6 +113,10 @@ const Visualizer = () => {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
         className="w-full h-full touch-none"
         style={{ cursor: isDragging ? 'grabbing' : draggedNode ? 'grabbing' : 'grab' }}
       >
@@ -196,6 +242,15 @@ const Visualizer = () => {
                 const mouseY = (e.clientY - rect.top) / zoom + viewBox.y;
                 setDragOffset({ x: mouseX - node.x, y: mouseY - node.y });
               }}
+              onTouchStart={(e) => { 
+                e.stopPropagation(); 
+                setDraggedNode(node.id); 
+                const rect = svgRef.current.getBoundingClientRect();
+                const touch = e.touches[0];
+                const mouseX = (touch.clientX - rect.left) / zoom + viewBox.x;
+                const mouseY = (touch.clientY - rect.top) / zoom + viewBox.y;
+                setDragOffset({ x: mouseX - node.x, y: mouseY - node.y });
+              }}
               className="cursor-pointer"
             >
               <motion.circle
@@ -236,9 +291,9 @@ const Visualizer = () => {
 };
 
 const LegendItem = ({ color, label }) => (
-  <div className="flex items-center gap-2">
+  <div className="flex items-center gap-2 shrink-0">
     <div className={`w-3 h-3 rounded-full ${color}`} />
-    <span>{label}</span>
+    <span className="whitespace-nowrap">{label}</span>
   </div>
 );
 

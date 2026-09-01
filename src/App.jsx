@@ -36,7 +36,7 @@ function App() {
             <div className="flex-1 relative flex flex-col min-w-0 bg-[#0a0a0f] lg:rounded-tl-3xl shadow-[-10px_0_30px_rgba(0,0,0,0.5)] border-t lg:border-l border-indigo-800/50 lg:overflow-hidden z-10">
               {activeTab === 'visualizer' && (
                 <>
-                  <div className="flex-1 relative overflow-hidden h-[50vh] lg:h-auto min-h-[400px]">
+                  <div className="flex-1 relative overflow-hidden min-h-[70vh] lg:min-h-0 h-auto">
                     <Visualizer />
                   </div>
                   <TracePanel />

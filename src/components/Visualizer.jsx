@@ -7,7 +7,7 @@ import { Maximize2, Minimize2, MousePointer2, Move, ZoomIn, ZoomOut, RotateCcw }
 const Visualizer = () => {
   const { graph, updateNodePosition, startNode, endNode } = useGraph();
   const { currentStep } = useAlgorithm();
-  const [viewBox, setViewBox] = useState({ x: -80, y: -20, width: 1000, height: 800 });
+  const [viewBox, setViewBox] = useState({ x: -80, y: -140, width: 1000, height: 800 });
   const [zoom, setZoom] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
   const [draggedNode, setDraggedNode] = useState(null);
@@ -89,15 +89,15 @@ const Visualizer = () => {
   return (
     <div id="visualizer-container" className="w-full h-full relative cursor-grab active:cursor-grabbing select-none overflow-hidden grid-bg">
       <div className="absolute top-0 left-0 z-10 w-full lg:w-auto">
-         <div className="flex flex-row lg:flex-col p-2 lg:p-3 gap-4 lg:gap-2 bg-indigo-950/95 lg:bg-indigo-950 border-b lg:border-r lg:border-b border-indigo-700 shadow-xl rounded-none lg:rounded-br-2xl text-indigo-100 items-center lg:items-stretch overflow-x-auto">
+         <div className="flex flex-row lg:flex-col p-2 lg:p-3 gap-3 lg:gap-2 bg-indigo-950/95 lg:bg-indigo-950 border-b lg:border-r lg:border-b border-indigo-700 shadow-xl rounded-none lg:rounded-br-2xl text-indigo-100 items-center lg:items-stretch flex-nowrap justify-start lg:justify-center overflow-x-auto no-scrollbar">
             <div className="flex flex-row items-center gap-1 bg-indigo-900/50 p-1 rounded-lg border border-indigo-800/50 shrink-0">
               <button onClick={() => setZoom(z => Math.min(z * 1.2, 3))} className="p-1.5 hover:bg-indigo-700 hover:text-white rounded transition-colors text-indigo-300" title="Zoom In"><ZoomIn size={16} /></button>
               <button onClick={() => setZoom(z => Math.max(z / 1.2, 0.5))} className="p-1.5 hover:bg-indigo-700 hover:text-white rounded transition-colors text-indigo-300" title="Zoom Out"><ZoomOut size={16} /></button>
               <div className="w-px h-4 bg-indigo-800 mx-0.5"></div>
-              <button onClick={() => { setViewBox({ x: -80, y: -20, width: 1000, height: 800 }); setZoom(1); }} className="p-1.5 hover:bg-indigo-700 hover:text-white rounded transition-colors text-indigo-300" title="Reset View"><RotateCcw size={16} /></button>
+              <button onClick={() => { setViewBox({ x: -80, y: -140, width: 1000, height: 800 }); setZoom(1); }} className="p-1.5 hover:bg-indigo-700 hover:text-white rounded transition-colors text-indigo-300" title="Reset View"><RotateCcw size={16} /></button>
             </div>
             
-            <div className="flex flex-row lg:flex-col gap-4 lg:gap-2 text-[10px] font-bold px-1 shrink-0">
+            <div className="grid grid-cols-2 min-[400px]:flex min-[400px]:flex-row lg:flex-col gap-x-4 min-[400px]:gap-x-3 gap-y-1.5 lg:gap-2 text-[8px] min-[400px]:text-[10px] font-bold px-1 shrink-0 whitespace-nowrap">
                <LegendItem color="bg-blue-500" label="Current" />
                <LegendItem color="bg-amber-500" label="Frontier" />
                <LegendItem color="bg-emerald-500" label="Visited" />
